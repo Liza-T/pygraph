@@ -7,7 +7,7 @@ def ellips(xc, yc, a, b, fi=0):
     for x in range(-a, a):
         y = ((1 - x**2 / a**2) * b**2) ** (1/2)
         l.append((xc + math.cos(fi) * x + math.sin(fi) * y, (yc - math.sin(fi) * x + math.cos(fi) * y)))
-    for x in range(a, -a, -1)
+    for x in range(a, -a, -1):
         y = ((1 - x**2 / a**2) * b**2) ** (1/2)
         l.append((xc + math.cos(fi) * x + math.sin(fi) * (-y), (yc - math.sin(fi) * x + math.cos(fi) * (-y))))
     polygon(l)
@@ -16,34 +16,42 @@ def ellips(xc, yc, a, b, fi=0):
 
 width = 600
 height = 600
-r=50-20
-g=77-10
-b=90-10
+r=20
+g=55
+b=70
 brushColor(r, g, b)
 rectangle (0, 0, width, height)
 for i in range(height):
     penColor(r, g, b)
     line(0, i, 600, i)
     if i % 10 == 0:
-        r += 1
+        r += 3
         g += 1
-        b += 1
+        b += 2
 brushColor(35, 25, 15)
 rectangle(0, 400, 600, 600)
+
+#Moon
 brushColor('light yellow')
-circle(450, 100, 50)
-pencolor(30, 67, 80)
-brushColor(30, 67, 80)
-circle(430, 95, 50)
-for i in range (10):
-    k = random.randint(0, 15)
-    brushColor(50+k, 90+k, 100+k)
-    penColor(brushColor())
-    circle(random.randint(0, 600), random.randint(0, 300), random.randint(10, 100))
-for i in range(200):
+circle(430, 50, 30)
+brushColor(35, 60, 80)
+penColor(brushColor())
+circle(423, 46, 30)
+
+#Stars
+for i in range(300):
     point(random.randint(0, 600), random.randint(0, 400), 'white')
+
+#Clouds
+for i in range(10):
+    brushColor(115 + i, 100 + 2*i, 145 + 2*i)
+    penColor(brushColor())
+    l = random.randint(40, 120)
+    ellips(random.randint(0, 500), random.randint(0, 350), l, l/4)
+
+    
 penColor('black')
-brushColor(40,20,0)
+brushColor(37,30,20)
 rectangle(100, 200, 400, 500)
 brushColor(100, 70, 50)
 rectangle(100, 270, 400, 285)
@@ -66,5 +74,6 @@ brushColor('white')
 
 
 run()
+
 
 
