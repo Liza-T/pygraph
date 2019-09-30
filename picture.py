@@ -4,7 +4,7 @@ import random
 import math
 
 def keyPressed(event):
-    global Dx, Dy
+    global Dx, Dy, light
     Dx = 0; Dy = 0
     if event.keycode == VK_ESCAPE:
         close()
@@ -20,6 +20,8 @@ def keyPressed(event):
     elif event.keycode == VK_DOWN:
         Dx = 0
         Dy = 5
+    elif event.keycode == VK_SPACE:
+        turnlights()
     else:
         pass
     move_ghost()
@@ -49,7 +51,10 @@ def move_ghost():
     moveObjectBy(eye1, Dx, Dy)
     moveObjectBy(eye2, Dx, Dy)
     brushColor('white')
-    x+=1
+    moveObjectBy(blood, Dx, Dy)
+    x+=Dx
+    y+=Dy
+
 def windows(r, g, b):
     for i in range(3):
         delta = random.randint(0, 100)
@@ -57,7 +62,47 @@ def windows(r, g, b):
         rectangle(100 + (300 - 210) / 4 + i * ((300 - 210) / 4 + 70), 330, \
               100 + (300 - 210) / 4 + i * ((300 - 210)/4 + 70) + 70, 400)
 
+def turnlights():
+    global window, light
+    if light:
+        brushColor('black')
+    else:
+        brushColor('gold')
+    for i in range(3):
+        deleteObject(window[i])
+        window[i]=rectangle(100 + (300 - 210) / 4 + i * ((300 - 210) / 4 + 70), 330, \
+              100 + (300 - 210) / 4 + i * ((300 - 210)/4 + 70) + 70, 400)
+    light = not light 
+    ghostrearm()
+    return
 
+def ghostrearm(): #перезагрузка призрака
+    global head, body, eye1, eye2, x, y, blood, light
+    deleteObject(head)
+    deleteObject(eye1)
+    deleteObject(body)
+    deleteObject(eye2)
+    deleteObject(blood)
+    brushColor('lightgray')
+    head = circle(x, y, 30)
+    body = polygon([(x - 60, y + 50), (x - 30, y), (x + 30, y), (x + 60, y + 50)])
+    if light:
+        brushColor('black')
+    else:
+        brushColor('red')
+    eye1=circle(x - 15, y - 10, 3)
+    eye2=circle(x + 15, y - 10, 3)
+    if light:
+        brushColor('lightgray')
+        penColor('lightgray')
+    else:
+        brushColor('red')
+        penColor('red')
+    blood=polygon([(x+5,y+1),(x+8,y+1),(x+8,y+11),(x+5,y+11)])
+    penColor('black')
+    return
+
+light=True
 width = 600
 height = 600
 Dx = 0
@@ -97,16 +142,6 @@ for i in range(10):
     l = random.randint(40, 120)
     ellips(random.randint(0, 500), random.randint(0, 350), l, l/4)
 
-#Ghost 
-x = 100
-y = 430
-brushColor('lightgray')
-head = circle(x, y, 30)
-body = polygon([(x - 60, y + 50), (x - 30, y), (x + 30, y), (x + 60, y + 50)])
-brushColor('black')
-eye1=circle(x - 15, y - 10, 3)
-eye2=circle(x + 15, y - 10, 3)
-
 #House
 penColor('black')
 brushColor(37, 30, 20)
@@ -118,11 +153,18 @@ for i in range(20):
 rectangle(100, 200, 400, 205)
 brushColor(40, 20, 0)
 polygon([(70, 200), (320, 130), (430, 200)])
+window=[0]*3
 for i in range(3):
     brushColor('gold')
-    rectangle(100 + (300 - 210) / 4 + i * ((300 - 210) / 4 + 70), 330, \
+    window[i]=rectangle(100 + (300 - 210) / 4 + i * ((300 - 210) / 4 + 70), 330, \
               100 + (300 - 210) / 4 + i * ((300 - 210)/4 + 70) + 70, 400)
 
+
+#Ghost
+head, body, eye1, eye2, blood = 0, 0, 0, 0, 0
+x = 100
+y = 430
+ghostrearm()
 
 onKey(keyPressed)
 
