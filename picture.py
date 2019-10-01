@@ -41,11 +41,11 @@ def ellips(xc, yc, a, b, fi = 0):
 def ellipse(xc, yc, a1, b1, a2, b2, fi = 0):
     l=[]
     if b1<0:
-        for x in range(-a1, a1, 5):
+        for x in range(-a1, a1, 1):
             y = ((1 - x**2 / a2**2) * b1**2) ** (1/2)
             l.append((xc + math.cos(fi) * x + math.sin(fi) * (-y), \
                       (yc - math.sin(fi) * x + math.cos(fi) * (-y))))
-        for x in range(a2, -a2, -5):
+        for x in range(a2, -a2, -1):
             y = ((1 - x**2 / a2**2) * b2**2) ** (1/2)
             l.append((xc + math.cos(fi) * x + math.sin(fi) * (-y), \
                       (yc - math.sin(fi) * x + math.cos(fi) * (-y))))
@@ -67,7 +67,9 @@ def ellipse(xc, yc, a1, b1, a2, b2, fi = 0):
             y = ((1 - x**2 / a2**2) * b2**2) ** (1/2)
             l.append((xc + math.cos(fi) * x + math.sin(fi) * (-y), \
                       (yc - math.sin(fi) * x + math.cos(fi) * (-y))))
-    polygon(l)
+    brushColor('light yellow')
+    penColor('black')
+    return polygon(l)
 
 def move_ghost():
     global x, Dx, Dy, y
@@ -145,8 +147,7 @@ def updmoon():
         b1, b2 = b2, b1
     elif b1 == 50 and b2 < 50:
         b2 += 1
-    brushColor('black')
-    penColor('light yellow')
+    
     moon = ellipse(430, 50, 50, b1, 50, b2, math.pi/2)
     
 light = True
