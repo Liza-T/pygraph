@@ -12,6 +12,8 @@ colors2 = ['#b5dfe5', '#437f83', '#a0d2d8', '#5e9fa3', '#d2f1f6']
 colors1 = ['#ae215b', '#c1317e']
 delta_t = 5
 score = 0
+balls_number1 = 5
+balls_number2 = 10
 
 
 class Ball():
@@ -164,16 +166,30 @@ def move_all_balls():
             dist = ((balls[i].x - balls[j].x) ** 2 + (balls[i].y - balls[j].y) ** 2) ** 0.5
             if i != j and dist < (balls[i].r + balls[j].r):
                 balls[i].collision(balls[j])
-    root.after(delta_t, move_all_balls)  
+    root.after(delta_t, move_all_balls)
 
 
-balls_number1 = 5
-balls_number2 = 10
+def write():
+    global score, name
+    scores = []
+    list1 = []
+    with open('table.txt', 'w') as f:
+        pass
+    with open('table.txt', 'r') as f:
+        for i in f:
+            scores.append(i.split(',  '))
+        scores.append([name, str(score) + '\n'])
+        scores.sort(key = lambda s: int(s[1][0:len(s[1]) - 1]), reverse = True)
+    with open('table.txt', 'w') as f:    
+        for i in scores:
+            f.write(',  '.join(i))
+
+
 balls = []
-
+print('What\'s your name?')
+name = input()
 l = tk.Label(root, bg = 'white', fg = 'black', width=20)
 l.pack()
-
 for i in range(balls_number1):
     b = Ball1(rnd(7, 15), choice(colors1))
     balls.append(b)
@@ -185,18 +201,4 @@ canv.bind('<Button-1>', click)
 
 tk.mainloop()
 
-
-
-
-
-
-
-
-    
-
-
-
-
-
-
-            
+write()
