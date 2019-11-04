@@ -23,7 +23,7 @@ class Ball():
         self.r = r
         self.color = color
         self.obj = canv.create_oval(
-                        self.x - r, self.y - r, 
+                        self.x - r, self.y - r,
                         self.x + r, self.y + r, 
                         fill=color, width=0
                         )
@@ -53,13 +53,14 @@ class Ball():
             self.vy = -self.vy
 
     def collision(self, other):
-            dist = ((self.x - other.x)**2 + (self.y - other.y)**2)**0.5
+            dist = ((self.x - other.x)**2 +
+                    (self.y - other.y)**2)**0.5
             m1 = self.r
             m2 = other.r
             if abs(self.x - other.x)/dist >= 1:
                 fi = 0
             elif (self.x - other.x > 0
-                    and self.y - other.y > 0 
+                    and self.y - other.y > 0
                     or self.x - other.x < 0
                     and self.y - other.y < 0):
                 fi = math.acos(abs(self.x - other.x) / dist)
@@ -83,7 +84,7 @@ class Ball():
             vy2 = v02 * math.sin(a2)
             v1 = (vx1 ** 2 + vy1 ** 2) ** 0.5
             v2 = (vx2 ** 2 + vy2 ** 2) ** 0.5
-            if vy1 !=0:
+            if vy1 != 0:
                 a1 = math.acos(vx1 / v1) * vy1 / abs(vy1)
             else:
                 a1 = math.acos(vx1 / v1)
@@ -128,7 +129,7 @@ class Ball2(Ball):
         super().__init__(r, color)
         self.vx = rnd(0, 40)/20
         self.vy = rnd(0, 40)/20
-    
+
     def move_ball2(self):
         self.delete()
         self.reflection()
@@ -141,9 +142,8 @@ def click(event):
     global score, l
     k = -1
     for i in range(len(balls)):
-        if (
-        ((balls[i].x - event.x) ** 2 +
-        (balls[i].y - event.y) ** 2) ** (1 / 2)<= balls[i].r):
+        if ((balls[i].x - event.x)**2 + 
+            (balls[i].y - event.y)**2)**0.5 <= balls[i].r:
             k = i
     if k >= 0:
         canv.delete(balls[k].obj)
@@ -172,8 +172,8 @@ def move_all_balls():
         else:
             balls[i].move_ball1()
         for j in range(len(balls)):
-            dist = ((balls[i].x - balls[j].x) ** 2 +
-                    (balls[i].y - balls[j].y) ** 2) ** 0.5
+            dist = ((balls[i].x - balls[j].x)**2 +
+                    (balls[i].y - balls[j].y)**2)**0.5
             if i != j and dist < (balls[i].r + balls[j].r):
                 balls[i].collision(balls[j])
     root.after(delta_t, move_all_balls)
