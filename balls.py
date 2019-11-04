@@ -24,7 +24,7 @@ class Ball():
         self.color = color
         self.obj = canv.create_oval(
                         self.x - r, self.y - r,
-                        self.x + r, self.y + r, 
+                        self.x + r, self.y + r,
                         fill=color, width=0
                         )
 
@@ -142,8 +142,9 @@ def click(event):
     global score, l
     k = -1
     for i in range(len(balls)):
-        if ((balls[i].x - event.x)**2 + 
-            (balls[i].y - event.y)**2)**0.5 <= balls[i].r:
+        if (
+                (balls[i].x - event.x)**2 +
+                (balls[i].y - event.y)**2)**0.5 <= balls[i].r:
             k = i
     if k >= 0:
         canv.delete(balls[k].obj)
