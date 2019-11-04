@@ -53,56 +53,56 @@ class Ball():
             self.vy = -self.vy
 
     def collision(self, other):
-            dist = ((self.x - other.x)**2 +
-                    (self.y - other.y)**2)**0.5
-            m1 = self.r
-            m2 = other.r
-            if abs(self.x - other.x)/dist >= 1:
-                fi = 0
-            elif (self.x - other.x > 0
-                    and self.y - other.y > 0
-                    or self.x - other.x < 0
-                    and self.y - other.y < 0):
-                fi = math.acos(abs(self.x - other.x) / dist)
-            else:
-                fi = math.pi - math.acos(abs(self.x - other.x)/dist)
-            v01 = (self.vx ** 2 + self.vy ** 2) ** 0.5
-            v02 = (other.vx ** 2 + other.vy ** 2) ** 0.5
-            angle1 = math.acos(self.vx / v01)
-            if self.vy < 0:
-                angle1 = 2*math.pi - angle1
+        dist = ((self.x - other.x)**2 +
+                (self.y - other.y)**2)**0.5
+        m1 = self.r
+        m2 = other.r
+        if abs(self.x - other.x)/dist >= 1:
+            fi = 0
+        elif (self.x - other.x > 0
+                and self.y - other.y > 0
+                or self.x - other.x < 0
+                and self.y - other.y < 0):
+            fi = math.acos(abs(self.x - other.x) / dist)
+        else:
+            fi = math.pi - math.acos(abs(self.x - other.x)/dist)
+        v01 = (self.vx ** 2 + self.vy ** 2) ** 0.5
+        v02 = (other.vx ** 2 + other.vy ** 2) ** 0.5
+        angle1 = math.acos(self.vx / v01)
+        if self.vy < 0:
+            angle1 = 2*math.pi - angle1
             angle2 = math.acos(other.vx / v02)
-            if other.vy < 0:
-                angle2 = 2*math.pi - angle2
-            a1 = angle1 - fi
-            a2 = angle2 - fi
-            vx20 = v02 * math.cos(a2)
-            vx10 = v01 * math.cos(a1)
-            vx1 = 2 * vx20 * m2 / (m1 + m2) - vx10 * (m2 - m1) / (m2 + m1)
-            vx2 = 2 * vx10 * m1 / (m1 + m2) - vx20 * (m2 - m1) / (m2 + m1)
-            vy1 = v01 * math.sin(a1)
-            vy2 = v02 * math.sin(a2)
-            v1 = (vx1 ** 2 + vy1 ** 2) ** 0.5
-            v2 = (vx2 ** 2 + vy2 ** 2) ** 0.5
-            if vy1 != 0:
-                a1 = math.acos(vx1 / v1) * vy1 / abs(vy1)
-            else:
-                a1 = math.acos(vx1 / v1)
-            if vy2 != 0:
-                a2 = math.acos(vx2 / v2) * vy2 / abs(vy2)
-            else:
-                a2 = math.acos(vx2 / v2)
-            angle11 = (a1 + fi) % (math.pi * 2)
-            angle22 = (a2 + fi) % (math.pi * 2)
-            self.vx = v1 * math.cos(angle11)
-            self.vy = v1 * math.sin(angle11)
-            other.vx = v2 * math.cos(angle22)
-            other.vy = v2 * math.sin(angle22)
-            r = self.r + other.r - dist
-            self.x += r * math.cos(fi)
-            self.y += r * math.sin(fi)
-            other.x -= r * math.cos(fi)
-            other.y -= r * math.sin(fi)
+        if other.vy < 0:
+            angle2 = 2*math.pi - angle2
+        a1 = angle1 - fi
+        a2 = angle2 - fi
+        vx20 = v02 * math.cos(a2)
+        vx10 = v01 * math.cos(a1)
+        vx1 = 2 * vx20 * m2 / (m1 + m2) - vx10 * (m2 - m1) / (m2 + m1)
+        vx2 = 2 * vx10 * m1 / (m1 + m2) - vx20 * (m2 - m1) / (m2 + m1)
+        vy1 = v01 * math.sin(a1)
+        vy2 = v02 * math.sin(a2)
+        v1 = (vx1 ** 2 + vy1 ** 2) ** 0.5
+        v2 = (vx2 ** 2 + vy2 ** 2) ** 0.5
+        if vy1 != 0:
+            a1 = math.acos(vx1 / v1) * vy1 / abs(vy1)
+        else:
+            a1 = math.acos(vx1 / v1)
+        if vy2 != 0:
+            a2 = math.acos(vx2 / v2) * vy2 / abs(vy2)
+        else:
+            a2 = math.acos(vx2 / v2)
+        angle11 = (a1 + fi) % (math.pi * 2)
+        angle22 = (a2 + fi) % (math.pi * 2)
+        self.vx = v1 * math.cos(angle11)
+        self.vy = v1 * math.sin(angle11)
+        other.vx = v2 * math.cos(angle22)
+        other.vy = v2 * math.sin(angle22)
+        r = self.r + other.r - dist
+        self.x += r * math.cos(fi)
+        self.y += r * math.sin(fi)
+        other.x -= r * math.cos(fi)
+        other.y -= r * math.sin(fi)
 
 
 class Ball1(Ball):
